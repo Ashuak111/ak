@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration Form Validation</title>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Registration Form</h2>
+
+<form id="registration" onsubmit="return formValidation()">
+    <label for="userid">User ID:</label><br>
+    <input type="text" id="userid" name="userid"><br><br>
+    <label for="passid">Password:</label><br>
+    <input type="password" id="passid" name="passid"><br><br>
+    <label for="username">Username:</label><br>
+    <input type="text" id="username" name="username"><br><br>
+    <label for="address">Address:</label><br>
+    <input type="text" id="address" name="address"><br><br>
+    <label for="country">Country:</label><br>
+    <select id="country" name="country">
+        <option value="Default">Select your country</option>
+        <option value="India">India</option>
+        <option value="USA">USA</option>
+        <option value="Canada">Canada</option>
+        <!-- Add more options as needed -->
+    </select><br><br>
+    <label for="zip">ZIP Code:</label><br>
+    <input type="text" id="zip" name="zip"><br><br>
+    <label for="email">Email:</label><br>
+    <input type="text" id="email" name="email"><br><br>
+    <label>Gender:</label><br>
+    <input type="radio" name="gender" value="male"> Male<br>
+    <input type="radio" name="gender" value="female"> Female<br><br>
+    <input type="submit" value="Register">
+</form>
+
+<p id="error" class="error"></p>
+
+<script>
+function formValidation() {
+    var frm = document.getElementById("registration");
+    var uid = document.getElementById("userid");
+    var passid = document.getElementById("passid");
+    var uname = document.getElementById("username");
+    var uadd = document.getElementById("address");
+    var ucountry = document.getElementById("country");
+    var uzip = document.getElementById("zip");
+    var uemail = document.getElementById("email");
+    var ugender = document.getElementsByName("gender");
+    
+    if (userid_validation(uid, 5, 12)) {
+        if (passid_validation(passid, 7, 12)) {
+            if (allLetter(uname)) {
+                if (alphanumeric(uadd)) {
+                    if (countryselect(ucountry)) {
+                        if (allnumeric(uzip)) {
+                            if (ValidateEmail(uemail)) {
+                                if (validgender(ugender)) {
+                                    frm.submit();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    document.getElementById("registration").reset();
+    return false;
+}
+
+function userid_validation(uid, mx, my) {
+    var uid_len = uid.value.length;
+    if (uid_len == 0 || uid_len >= my || uid_len < mx) {
+        alert("User ID should not be empty and length should be between " + mx + " to " + my);
+        uid.focus();
+        return false;
+    }
+    return true;
+}
+
+function passid_validation(passid, mx, my) {
+    var passid_len = passid.value.length;
+    if (passid_len == 0 || passid_len >= my || passid_len < mx) {
+        alert("Password should not be empty and length should be between " + mx + " to " + my);
+        passid.focus();
+        return false;
+    }
+    return true;
+}
+
+function allLetter(uname) {
+    var letters = /^[A-Za-z]+$/;
+    if (uname.value == null || uname.value == "") {
+        alert('Username should not be empty');
+        uname.focus();
+        return false;
+    } else if (uname.value.match(letters)) {
+        return true;
+    } else {
+        alert('Username must have alphabet characters only');
+        uname.value = "";
+        uname.focus();
+        return false;
+    }
+}
+
+function alphanumeric(uadd) {
+    var letters = /^[0-9a-zA-Z]+$/;
+    if (uadd.value.match(letters)) {
+        return true;
+    } else {
+        alert('User address must have alphanumeric characters only');
+        uadd.focus();
+        return false;
+    }
+}
+
+function countryselect(ucountry) {
+    if (ucountry.value == "Default") {
+        alert('Select your country from the list');
+        ucountry.focus();
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function allnumeric(uzip) {
+    var numbers = /^[0-9]+$/;
+    if (uzip.value.match(numbers)) {
+        return true;
+    } else {
+        alert('ZIP code must have numeric characters only');
+        uzip.focus();
+        return false;
+    }
+}
+
+function ValidateEmail(uemail) {
+    var mailformat = /^([a-zA-Z0-9_\.\-])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if (uemail.value.match(mailformat)) {
+        return true;
+    } else {
+        alert("You have entered an invalid email address!");
+        uemail.focus();
+        return false;
+    }
+}
+
+function validgender(ugender) {
+    var isChecked = false;
+    for (var i = 0; i < ugender.length; i++) {
+        if (ugender[i].checked) {
+            isChecked = true;
+            break;
+        }
+    }
+    if (!isChecked) {
+        alert("Select male or female");
+    }
+    return isChecked;
+}
+</script>
+
+</body>
+</html>

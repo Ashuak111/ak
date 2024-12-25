@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form Validation Example</title>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<h2>Form Validation Example</h2>
+<form id="myForm" onsubmit="return validateForm()">
+    <label for="userid">User ID:</label><br>
+    <input type="text" id="userid" name="userid"><br><br>
+    <label for="username">Username:</label><br>
+    <input type="text" id="username" name="username"><br><br>
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password"><br><br>
+    <label for="address">Address:</label><br>
+    <input type="text" id="address" name="address"><br><br>
+    <label for="email">Email:</label><br>
+    <input type="text" id="email" name="email"><br><br>
+    <label for="gender">Gender:</label><br>
+    <select id="gender" name="gender">
+        <option value="">Select</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+    </select><br><br>
+    <label for="country">Country:</label><br>
+    <select id="country" name="country">
+        <option value="">Select</option>
+        <option value="india">India</option>
+        <option value="usa">USA</option>
+        <option value="canada">Canada</option>
+    </select><br><br>
+    <input type="submit" value="Submit">
+</form>
+<p id="error" class="error"></p>
+<script>
+function validateForm() {
+    var userid = document.getElementById("userid").value;
+    var username = document.getElementById("username").value;
+    var password = document.getElementById("password").value;
+    var address = document.getElementById("address").value;
+    var email = document.getElementById("email").value;
+    var gender = document.getElementById("gender").value;
+    var country = document.getElementById("country").value;
+    var errorMessage = document.getElementById("error");
+    errorMessage.innerHTML = "";
+    if (userid == "") {
+        errorMessage.innerHTML += "User ID must be filled out.<br>";
+    }
+    if (username == "") {
+        errorMessage.innerHTML += "Username must be filled out.<br>";
+    }
+    if (password == "") {
+        errorMessage.innerHTML += "Password must be filled out.<br>";
+    } else if (password.length < 6) {
+        errorMessage.innerHTML += "Password must be at least 6 characters long.<br>";
+    }
+    if (address == "") {
+        errorMessage.innerHTML += "Address must be filled out.<br>";
+    }
+    var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    if (email == "") {
+        errorMessage.innerHTML += "Email must be filled out.<br>";
+    } else if (!emailPattern.test(email)) {
+        errorMessage.innerHTML += "Please enter a valid email address.<br>";
+    }
+    if (gender == "") {
+        errorMessage.innerHTML += "Please select a gender.<br>";
+    }
+    if (country == "") {
+        errorMessage.innerHTML += "Please select a country.<br>";
+    }
+    if (errorMessage.innerHTML != "") {
+        return false;
+    }
+    alert("Form submitted successfully!");
+    return true;
+}
+</script>
+
+</body>
+</html>
